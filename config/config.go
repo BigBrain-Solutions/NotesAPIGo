@@ -2,7 +2,6 @@ package config
 
 import (
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/facebook"
 	"golang.org/x/oauth2/google"
 	"os"
 )
@@ -27,18 +26,6 @@ func LoadConfig() {
 		Scopes: []string{
 			"https://www.googleapis.com/auth/userinfo.email",
 			"https://www.googleapis.com/auth/userinfo.profile",
-		},
-	}
-
-	// Oauth configuration for Facebook
-	AppConfig.FacebookLoginConfig = oauth2.Config{
-		ClientID:     os.Getenv("FB_CLIENT_ID"),
-		ClientSecret: os.Getenv("FB_CLIENT_SECRET"),
-		Endpoint:     facebook.Endpoint,
-		RedirectURL:  "http://localhost:8080/fb_callback",
-		Scopes: []string{
-			"email",
-			"public_profile",
 		},
 	}
 }
