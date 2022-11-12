@@ -3,9 +3,11 @@ package main
 import (
 	"NotesyAPI/config"
 	"NotesyAPI/controller"
-	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -14,15 +16,22 @@ func main() {
 	config.LoadConfig()
 
 	// create a router
-	mux := http.NewServeMux()
+	r := mux.NewRouter()
 
 	// define routes
-	mux.HandleFunc("/google_login", controller.GoogleLogin)
-	mux.HandleFunc("/google_callback", controller.GoogleCallback)
+	r.HandleFunc("/google_login", controller.GoogleLogin).Methods("GET")
+	r.HandleFunc("/google_callback", controller.GoogleCallback).Methods("GET")
+
+	r.HandleFunc("/note/{id}", controller.GetNote).Methods("GET")
+	r.HandleFunc("/notes", controller.GetNotes).Methods("GET")
+	r.HandleFunc("/note/{id}", controller.AddNote).Methods("PUT")
+
+	r.HandleFunc("/note/{id}", controller.UpdateNote).Methods("PATCH")
+	r.HandleFunc("/note/{id}", controller.DeleteNote).Methods("DELETE")
 
 	// run server
 	log.Println("started server on :: http://localhost:8080/")
-	if oops := http.ListenAndServe(":8080", mux); oops != nil {
+	if oops := http.ListenAndServe(":8080", r); oops != nil {
 		log.Fatal(oops)
 	}
 }
