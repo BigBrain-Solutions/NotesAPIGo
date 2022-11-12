@@ -14,12 +14,7 @@ NoteURL=localhost:8080
 API provides:
  
  - Google Login with oAuth 2.0
-
-TODO: 
-
--  Github Login with oAuth 2.0,
--  Firebase backed with Db,
--  Business Logic for managing notes 
+ - Redis as Primary Database
 
 </i>
 
