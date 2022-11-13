@@ -1,7 +1,7 @@
 # API fo NotesY.tk 
 
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](https://go.dev/)
-![builds](https://github.com/BigBrain-Solutions/NotesAPIGo/actions/workflows/go-ossf-slsa3-publish.yml/badge.svg)
+![builds](https://github.com/BigBrain-Solutions/NotesAPIGo/actions/workflows/ci.yml/badge.svg)
 
 ## Installation
 To get started create ``.env`` file with variables:
