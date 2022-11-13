@@ -1,4 +1,5 @@
-API fo NotesY.tk written in GoLang
+API fo NotesY.tk written in [![Go](https://img.shields.io/badge/--00ADD8?logo=go&logoColor=ffffff)](https://golang.org/)
+
 ============
 
 To get started create ``.env`` file with variables:
