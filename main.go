@@ -22,10 +22,10 @@ func main() {
 	r.HandleFunc("/google_login", controller.GoogleLogin).Methods("GET")
 	r.HandleFunc("/google_callback", controller.GoogleCallback).Methods("GET")
 
-	r.HandleFunc("/note/{id}", controller.GetNote).Methods("GET")           // get note by note Id
-	r.HandleFunc("/notes", controller.GetNotes).Methods("GET")              // get all notes
-	r.HandleFunc("/notes/{id}", controller.GetNotesByUserId).Methods("GET") // get all notes by user Id
-	r.HandleFunc("/note/{id}", controller.AddNote).Methods("PUT")           // add note by user Id
+	r.HandleFunc("/note/{id}", controller.GetNote).Methods("GET")      // get note by note Id
+	r.HandleFunc("/notes/all", controller.GetNotes).Methods("GET")     // get all notes
+	r.HandleFunc("/notes", controller.GetNotesByUserId).Methods("GET") // get all notes by user Id from JWT
+	r.HandleFunc("/note", controller.AddNote).Methods("PUT")           // add note by user Id from JWT
 
 	r.HandleFunc("/note/{id}", controller.UpdateNote).Methods("PATCH")  // update note by note Id
 	r.HandleFunc("/note/{id}", controller.DeleteNote).Methods("DELETE") // remove note by note Id

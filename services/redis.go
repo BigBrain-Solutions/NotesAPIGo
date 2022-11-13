@@ -4,13 +4,17 @@ import (
 	"github.com/go-redis/redis"
 )
 
-func SetString(key string, value string) {
-
-	rdb := redis.NewClient(&redis.Options{
+func redisClient() *redis.Client {
+	return redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
+}
+
+func SetString(key string, value string) {
+
+	rdb := redisClient()
 
 	err := rdb.Set(key, value, 0).Err()
 	if err != nil {
@@ -20,11 +24,7 @@ func SetString(key string, value string) {
 
 func GetString(key string) string {
 
-	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
-	})
+	rdb := redisClient()
 
 	val, err := rdb.Get(key).Result()
 	if err == redis.Nil {
