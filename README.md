@@ -1,6 +1,9 @@
-API fo NotesY.tk written in GoLang
-============
+# API fo NotesY.tk 
 
+[![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](https://go.dev/)
+![builds](https://github.com/BigBrain-Solutions/NotesAPIGo/actions/workflows/go-ossf-slsa3-publish.yml/badge.svg)
+
+## Installation
 To get started create ``.env`` file with variables:
 
 ```
@@ -9,18 +12,11 @@ NoteClientSecret=
 NoteURL=localhost:8080
 ```
 
-<i>
-
 API provides:
  
  - Google Login with oAuth 2.0
+ - Redis as Primary Database
 
-TODO: 
-
--  Github Login with oAuth 2.0,
--  Firebase backed with Db,
--  Business Logic for managing notes 
-
-</i>
+## Run
 
 Run by: ``go run main.go``
