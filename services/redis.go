@@ -27,6 +27,11 @@ func GetString(key string) string {
 	rdb := redisClient()
 
 	val, err := rdb.Get(key).Result()
+
+	if err != nil {
+		SetString("notes", "[]")
+	}
+
 	if err == redis.Nil {
 		return ""
 	} else if err != nil {

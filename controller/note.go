@@ -42,7 +42,11 @@ func AddNote(w http.ResponseWriter, r *http.Request) {
 
 	json.Unmarshal([]byte(notesArrJson), &notes)
 
-	note.Id = notes[len(notes)-1].Id + 1
+	if len(notes) == 0 {
+		note.Id = 0
+	} else {
+		note.Id = notes[len(notes)-1].Id + 1
+	}
 
 	notes = append(notes, note)
 
