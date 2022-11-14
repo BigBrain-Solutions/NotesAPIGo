@@ -23,6 +23,11 @@ func AddNote(w http.ResponseWriter, r *http.Request) {
 
 	headerValue := r.Header.Get("Authorization")
 
+	if headerValue == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	if services.IsAuthorized(headerValue) == false {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -66,7 +71,17 @@ func GetNotes(w http.ResponseWriter, r *http.Request) {
 
 	headerValue := r.Header.Get("Authorization")
 
+	if headerValue == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	if services.IsAuthorized(headerValue) == false {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	if services.JwtParse(headerValue).Scope != "admin" {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
@@ -86,6 +101,11 @@ func GetNotesByUserId(w http.ResponseWriter, r *http.Request) {
 	var userNotes []Note
 
 	headerValue := r.Header.Get("Authorization")
+
+	if headerValue == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	if services.IsAuthorized(headerValue) == false {
 		w.WriteHeader(http.StatusUnauthorized)
@@ -117,6 +137,12 @@ func GetNote(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	headerValue := r.Header.Get("Authorization")
+
+	if headerValue == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	if services.IsAuthorized(headerValue) == false {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -153,6 +179,12 @@ func DeleteNote(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	headerValue := r.Header.Get("Authorization")
+
+	if headerValue == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	if services.IsAuthorized(headerValue) == false {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -195,6 +227,12 @@ func UpdateNote(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	headerValue := r.Header.Get("Authorization")
+
+	if headerValue == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	if services.IsAuthorized(headerValue) == false {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
