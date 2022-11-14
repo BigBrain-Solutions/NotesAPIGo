@@ -13,13 +13,6 @@ type Claims struct {
 	Scope string
 }
 
-type Payload struct {
-	Id        string    `json:"id"`
-	scope     string    `json:"scope"`
-	IssuedAt  time.Time `json:"issued_at"`
-	ExpiredAt time.Time `json:"expired_at"`
-}
-
 const KEY = "qwertyuiopASDFGHJKL1234567890"
 
 func IsAuthorized(value string) bool {
@@ -30,6 +23,11 @@ func IsAuthorized(value string) bool {
 	})
 
 	if err != nil {
+		return false
+	}
+
+	// Prevents from hacking the JWT and removing the algorithm in header
+	if token.Method.Alg() == "None" || token.Method.Alg() == "" {
 		return false
 	}
 
