@@ -19,6 +19,14 @@ type Note struct {
 }
 
 func AddNote(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, PUT, PATCH, POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+	}
+
 	var notes []Note
 
 	headerValue := r.Header.Get("Authorization")
@@ -67,6 +75,14 @@ func AddNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetNotes(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, PUT, PATCH, POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+	}
+
 	var notes []Note
 
 	headerValue := r.Header.Get("Authorization")
@@ -96,6 +112,13 @@ func GetNotes(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetNotesByUserId(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, PUT, PATCH, POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+	}
 
 	var notes []Note
 	var userNotes []Note
@@ -129,9 +152,18 @@ func GetNotesByUserId(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(userNotes)
+	w.WriteHeader(http.StatusOK)
 }
 
 func GetNote(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, PUT, PATCH, POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+	}
+
 	var notes []Note
 
 	w.Header().Set("Content-Type", "application/json")
@@ -174,6 +206,14 @@ func GetNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteNote(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, PUT, PATCH, POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+	}
+
 	var notes []Note
 
 	w.Header().Set("Content-Type", "application/json")
@@ -222,6 +262,14 @@ func DeleteNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateNote(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, PUT, PATCH, POST, GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+	}
+
 	var notes []Note
 
 	w.Header().Set("Content-Type", "application/json")

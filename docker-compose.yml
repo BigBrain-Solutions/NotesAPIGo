@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: NotesDb
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes: 
+      - cache:/data
+
+  web:
+    build: .
+    container_name: NotesAPI
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - db
+
+volumes:
+  cache:
+    driver: local
