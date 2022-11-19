@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -42,6 +43,11 @@ func AddNote(w http.ResponseWriter, r *http.Request) {
 	}
 
 	claims := services.JwtParse(headerValue) // parsing JWT
+
+	if !strings.Contains(claims.Scope, "write:note") {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	var note Note
 	note.Created = time.Now()
@@ -102,6 +108,12 @@ func GetNotes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	claims := services.JwtParse(headerValue)
+	if !strings.Contains(claims.Scope, "read:note") {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 
 	notesArrJson := services.GetString("notes")
@@ -131,6 +143,12 @@ func GetNotesByUserId(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if services.IsAuthorized(headerValue) == false {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	claims := services.JwtParse(headerValue)
+	if !strings.Contains(claims.Scope, "read:note") {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
@@ -181,6 +199,10 @@ func GetNote(w http.ResponseWriter, r *http.Request) {
 	}
 
 	claims := services.JwtParse(headerValue)
+	if !strings.Contains(claims.Scope, "read:note") {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	notesArrJson := services.GetString("notes")
 
@@ -230,6 +252,12 @@ func DeleteNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	claims := services.JwtParse(headerValue)
+	if !strings.Contains(claims.Scope, "delete:note") {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	notesArrJson := services.GetString("notes")
 
 	params := mux.Vars(r)
@@ -241,8 +269,6 @@ func DeleteNote(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-
-	claims := services.JwtParse(headerValue)
 
 	for index, note := range notes {
 		if note.Id == id && note.UserId == claims.Id {
@@ -286,6 +312,12 @@ func UpdateNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	claims := services.JwtParse(headerValue)
+	if !strings.Contains(claims.Scope, "update:note") {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
 	notesArrJson := services.GetString("notes")
 
 	params := mux.Vars(r)
@@ -297,8 +329,6 @@ func UpdateNote(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-
-	claims := services.JwtParse(headerValue)
 
 	for index, note := range notes {
 		if note.Id == id && note.UserId == claims.Id {
